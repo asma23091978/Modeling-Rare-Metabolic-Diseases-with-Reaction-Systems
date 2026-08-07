@@ -1,349 +1,127 @@
-## PT-RS: Modeling Rare Metabolic Diseases with Reaction Systems
+# Modeling Rare Metabolic Diseases with Reaction Systems (PT-RS)
 
-This repository contains the computational workflow associated with **PT-RS**
-(**Phenylalanine–Tyrosine Catabolism Reaction Systems**), a qualitative model for analyzing rare inherited metabolic disorders affecting the phenylalanine–tyrosine (Phe–Tyr) catabolic pathway.
+This repository contains the computational material associated with the manuscript **“Modeling Rare Metabolic Diseases with Reaction Systems”**. The study models phenylalanine-tyrosine (Phe-Tyr) catabolism with Reaction Systems (RSs) and Discrete Entity-Level Annotation (DEA), and analyzes disease-relevant outcomes by target-oriented attractor analysis and dynamic negative slicing.
 
-The project combines **Reaction Systems (RSs)** with **Discrete Entity-Level Annotation (DEA)** to represent enzyme activity, metabolite levels, and cofactor-dependent reaction requirements in a biologically interpretable way. The model supports the analysis of both physiological pathway progression and pathological disruption, including metabolite accumulation, reduced downstream product formation, and activation of alternative metabolic routes.
+## What is included
 
-The workflow is implemented as a Python–Prolog pipeline. It combines graph-based attractor analysis with dynamic negative slicing in **BioReSolve** to identify the biological contexts, reactions, and molecular entities causally associated with selected disease-relevant target states.
+The repository contains:
 
----
+- `slicing_script.py`: Python post-processing for attractor analysis and dynamic negative slicing;
+- `prolog/hgd0_04_02_reactions.pl`: the PT-RS Prolog reaction specification, including auxiliary DEA rules and the 39 biological rules reported in the manuscript appendix;
+- `results/conditional_dependency_matrices/`: the five supplied target-specific conditional-dependency matrices;
+- `results/dynamic_negative_slicing/`: the two slicing summary matrices used in the manuscript appendix, plus the supplied positive/negative raw summary for the `sa` target;
+- `scripts/repo_check.py`: a repository consistency checker;
+- `requirements.txt`: Python dependencies.
 
-## Features
+The biological rule block was checked against manuscript Appendix B (R1-R39). One transcription error in the previous GitHub package was corrected in R38: `h20` -> `h2o`.
 
-* Qualitative modeling of the phenylalanine–tyrosine catabolic pathway using Reaction Systems.
-* Discrete Entity-Level Annotation (DEA) for enzymes, metabolites, and selected cofactors.
-* Target-oriented attractor analysis of biological transition networks.
-* Identification of initial contexts leading to selected pathological or physiological target states.
-* Dynamic negative slicing through BioReSolve and SWI-Prolog.
-* Extraction of positive and negative dependencies associated with target outcomes.
-* Export of results as CSV and JSON files.
-* Documentation of the modeling assumptions and analysis workflow.
+## Paper targets
 
----
+The public script is configured for the five target outcomes analyzed in the manuscript:
+
+| Manuscript target | Code entity/entities | Interpretation |
+|---|---|---|
+| HGA accumulation | `hga_a` | accumulated homogentisic acid |
+| Succinylacetone production | `sa` | succinylacetone present |
+| Hawkinsin accumulation | `hawkinsin_a` | accumulated hawkinsin |
+| Low tyrosine | `tyr_b` | low tyrosine |
+| Low tyrosine + low BH4 | `tyr_b`, `bh4_b` | combined target |
+
+DEA suffixes used in the implementation are: `_a` for accumulated metabolite level, no suffix for normal level, `_b` for low metabolite/cofactor level or hypomorphic enzyme activity, and `_nul` for null enzyme activity.
 
 ## Repository structure
 
 ```text
-PT-RS/
+.
 ├── README.md
 ├── requirements.txt
 ├── .gitignore
+├── LICENSE-TODO.md
 ├── slicing_script.py
-├── BioReSolvePositive.pl
-├── output/
-│   └── hgd0_04-02.dot
 ├── prolog/
 │   └── hgd0_04_02_reactions.pl
+├── output/
+│   └── README.md
+├── results/
+│   ├── README.md
+│   ├── conditional_dependency_matrices/
+│   │   ├── necessary_matrix_by_target_hga_a.pdf
+│   │   ├── necessary_matrix_by_target_hawk_a.pdf
+│   │   ├── necessary_matrix_by_target_sa.pdf
+│   │   ├── necessary_matrix_by_target_tyr_b.pdf
+│   │   └── necessary_matrix_by_target_tyr_b_bh4_b.pdf
+│   └── dynamic_negative_slicing/
+│       ├── table_results_bicolor-1.pdf
+│       ├── table_results_bicolor-2.pdf
+│       └── sa/
+│           ├── pos_output_sa.txt
+│           └── neg_output_sa.txt
 ├── docs/
-│   └── methods.tex
-├── figures/
-│   └── software architecture.png
+│   ├── FILE_SELECTION.md
+│   └── REPRODUCIBILITY_STATUS.md
 └── scripts/
     └── repo_check.py
 ```
 
----
-
 ## Requirements
-
-Before running the workflow, make sure that you have:
-
-* Python 3.9 or later
-* SWI-Prolog installed and available from the command line
-* The Python packages listed in `requirements.txt`
-* The BioReSolve Prolog engine file `BioReSolvePositive.pl`
-* The labeled transition system graph file `output/hgd0_04-02.dot`
-
----
-
-## Installation
-
-Clone the repository:
-
-```bash
-git clone https://github.com/asma23091978/PT-RS.git
-cd PT-RS
-```
-
-Create a virtual environment:
-
-```bash
-python -m venv .venv
-```
-
-Activate the virtual environment:
-
-```bash
-source .venv/bin/activate
-```
-
-On Windows PowerShell:
-
-```powershell
-.venv\Scripts\Activate.ps1
-```
-
-Install the Python dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
----
-
-## Required input files
-
-The main Python script expects the following files:
-
-```text
-BioReSolvePositive.pl
-output/hgd0_04-02.dot
-```
-
-The file `BioReSolvePositive.pl` must be located in the root directory of the repository, because it is loaded directly by the Python script through SWI-Prolog.
-
-The transition graph must be placed inside the `output/` folder and must be named:
-
-```text
-hgd0_04-02.dot
-```
-
----
-
-## How to run
-
-After installing the dependencies and placing all required files in the correct locations, run:
-
-```bash
-python slicing_script.py
-```
-
-The script performs the following steps:
-
-1. loads the `.dot` transition graph;
-2. detects attractors in the transition system;
-3. extracts the initial contexts leading to selected target states;
-4. generates the `params.pl` file required by BioReSolve;
-5. runs dynamic negative slicing through BioReSolve and SWI-Prolog;
-6. exports CSV and JSON result files.
-
----
-
-## Output
-
-The analysis generates result files under:
-
-```text
-Results/
-```
-
-Typical outputs include:
-
-* context-to-target CSV files;
-* sliced computation JSON files;
-* positive and negative dependency sets;
-* summary tables for downstream analysis.
-
-Generated files such as `Results/`, `params.pl`, and temporary slicing files are excluded from version control through `.gitignore`.
-
----
-
-## Methodological background
-
-A detailed description of the modeling assumptions and analysis workflow is provided in:
-
-```text
-docs/methods.tex
-```
-
-The method covers the construction of the PT-RS model for Phe–Tyr catabolism, the Discrete Entity-Level Annotation framework, the generation of the labeled transition system in BioReSolve, target-oriented attractor analysis, and dynamic negative slicing.
-
----
-
-## Notes on reproducibility
-
-This repository contains the Python workflow and the Prolog reaction-system model files required for the computational analysis.
-
-To fully reproduce the analysis, the user must provide the complete BioReSolve Prolog engine file and the corresponding `.dot` transition graph generated from the model.
-
----
-
-## Citation
-
-If you use this repository in academic work, please cite the associated manuscript or publication describing PT-RS, DEA, and the computational analysis workflow.
-
----
-
-## License
-
-No license has been selected yet. Before making the repository public, please add an appropriate open-source license, such as MIT, Apache-2.0, or GPL-3.0, depending on how you want others to use, modify, and redistribute the code.
-Modeling Rare Metabolic Diseases with Reaction Systems
-
-This repository contains a Python–Prolog workflow for modeling and analyzing rare metabolic diseases using Reaction Systems.
-
-The workflow combines graph-based attractor analysis with dynamic slicing in BioReSolve to identify the biological contexts, reactions, and molecular entities associated with selected target states.
-
-The project was developed for the qualitative analysis of the phenylalanine–tyrosine (Phe--Tyr) catabolic pathway, with a focus on rare metabolic disorders. The models use Reaction Systems together with Discrete Entity-Level Annotation (DEA) to represent pathway dynamics and support the interpretation of disease-relevant molecular states.
----
-
-## Features
-
-- Target-oriented attractor analysis of biological transition networks.
-- Identification of initial contexts leading to selected target attractors.
-- Dynamic negative slicing through BioReSolve and SWI-Prolog.
-- Extraction of positive and negative dependencies associated with target outcomes.
-- Export of results as CSV and JSON files.
-- Documentation of the modeling assumptions and analysis workflow.
-
----
-
-## Repository structure
-
-```text
-BioNetwork-Slicer/
-├── README.md
-├── requirements.txt
-├── .gitignore
-├── slicing_script.py
-├── BioReSolvePositive.pl
-├── output/
-│   └── hgd0_04-02.dot
-├── prolog/
-│   └── hgd0_04_02_reactions.pl
-├── docs/
-│   └── methods.tex
-├── figures/
-│   └── software architecture.png
-└── scripts/
-    └── repo_check.py
-```
-
----
-
-## Requirements
-
-Before running the project, make sure you have:
 
 - Python 3.9 or later
-- SWI-Prolog installed and available from the command line
-- The Python packages listed in `requirements.txt`
-- The BioReSolve Prolog file `BioReSolvePositive.pl`
-- The labeled transition system graph file `output/hgd0_04-02.dot`
+- SWI-Prolog
+- the Python packages in `requirements.txt`
+- the exact slicing-enabled BioReSolve Prolog file expected by the script as `BioReSolvePositive.pl`
+- the exact LTS graph expected by the script as `output/hgd0_04-02.dot`
 
----
-
-## Installation
-
-Clone the repository:
-
-```bash
-git clone https://github.com/asma23091978/BioNetwork-Slicer.git
-cd BioNetwork-Slicer
-```
-
-Create a virtual environment:
+Install the Python dependencies with:
 
 ```bash
 python -m venv .venv
-```
-
-Activate it:
-
-```bash
 source .venv/bin/activate
+pip install -r requirements.txt
 ```
 
 On Windows PowerShell:
 
 ```powershell
+python -m venv .venv
 .venv\Scripts\Activate.ps1
-```
-
-Install the Python dependencies:
-
-```bash
 pip install -r requirements.txt
 ```
 
----
+## Running the analysis
 
-## Required input files
-
-The main Python script expects the following files:
-
-```text
-BioReSolvePositive.pl
-output/hgd0_04-02.dot
-```
-
-`BioReSolvePositive.pl` must be located in the root directory because the Python script loads it directly through SWI-Prolog.
-
-The graph file must be placed inside the `output/` folder and must be named:
-
-```text
-hgd0_04-02.dot
-```
-
----
-
-## How to run
-
-After installing the dependencies and placing all required files in the correct locations, run:
+After adding the two exact runtime files listed above, run:
 
 ```bash
 python slicing_script.py
 ```
 
-The script performs:
+The script reads `output/hgd0_04-02.dot`, identifies attractors containing each paper target, extracts the corresponding initial contexts, generates `params.pl`, and calls BioReSolve for dynamic negative slicing. Generated files are written under `Results/` and are intentionally ignored by Git.
 
-1. loading of the `.dot` transition graph;
-2. attractor detection;
-3. target-oriented context extraction;
-4. generation of `params.pl`;
-5. dynamic negative slicing through BioReSolve;
-6. export of CSV and JSON results.
+## Reproducibility status
 
----
+This GitHub package is **paper-aligned but not yet fully executable from a clean clone**, because two files required by the current workflow were not present in the material supplied for this update:
 
-## Output
+1. `BioReSolvePositive.pl` containing the slicing predicates used by the Python code, including `main_do(negslice, ...)`;
+2. `output/hgd0_04-02.dot`, the exact labeled transition system used for the reported analysis.
 
-The analysis generates result files under:
+For end-to-end regeneration of the LTS from the RS model, the final LTS-generation configuration/driver used for the 17,496 initial configurations should also be archived. The older quantitative Prolog files supplied separately were not inserted as substitutes because they do not match the final DEA encoding described in the manuscript.
 
-```text
-Results/
+See `docs/REPRODUCIBILITY_STATUS.md` for the detailed check.
+
+## Repository check
+
+Run:
+
+```bash
+python scripts/repo_check.py
 ```
 
-Typical outputs include:
-
-- context-to-target CSV files;
-- sliced computation JSON files;
-- positive and negative dependency sets;
-- summary tables for downstream analysis.
-
-Generated files such as `Results/`, `params.pl`, and temporary slicing files are excluded from version control through `.gitignore`.
-
----
-
-## Methodological background
-
-A detailed description of the modeling assumptions and analysis workflow is provided in [`docs/methods.tex`](docs/methods.tex). The method covers the construction of the Reaction Systems model for Phe--Tyr catabolism, the Discrete Entity-Level Annotation framework, generation of the labeled transition system in BioReSolve, target-oriented attractor analysis, and dynamic negative slicing.
-
----
-
-## Notes on reproducibility
-
-The repository contains the Python workflow and the Prolog reaction-system model files required for the computational analysis.  
-To fully reproduce the analysis, the user must provide the complete BioReSolve Prolog engine file and the corresponding `.dot` transition graph generated from the model.
-
----
+The checker reports missing runtime files and scans public text/code files for local absolute paths.
 
 ## Citation
 
-If you use this repository in academic work, please cite the associated manuscript or publication describing the method and the biological model.
-
----
+The associated manuscript is **“Modeling Rare Metabolic Diseases with Reaction Systems”**. Add the final journal citation and DOI here once they are assigned.
 
 ## License
 
-A license has not been selected yet. Before making the repository public, add an appropriate open-source license, such as MIT, Apache-2.0, or GPL-3.0, depending on how you want others to use and redistribute the code.
+A license has not yet been selected for this repository. `LICENSE-TODO.md` is intentionally retained so that no license is assigned without the authors' decision.

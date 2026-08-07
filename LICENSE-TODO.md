@@ -1,11 +1,7 @@
-# License to choose
+# License not yet selected
 
-Before publishing this repository for reuse, choose a software license.
+No software/data license has been assigned to this repository in this package.
 
-Common choices:
+Before the public release, the authors should choose the license that reflects the intended reuse conditions and replace this file with the corresponding `LICENSE` file.
 
-- MIT License: permissive and simple.
-- Apache License 2.0: permissive, includes patent language.
-- GPL-3.0: copyleft, derivative works must remain open source under compatible terms.
-
-After choosing, replace this file with a real `LICENSE` file.
+No license was selected automatically during repository cleanup.
