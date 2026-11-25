@@ -4,7 +4,7 @@ This script is aligned with the targets reported in the manuscript
 "Modeling Rare Metabolic Diseases with Reaction Systems".
 
 Required runtime files:
-- output/hgd0_04-02.dot
+- output/LTS.dot
 - BioReSolvePositive.pl
 """
 
@@ -43,7 +43,7 @@ PAPER_TARGETS = [
 ]
 targets = PAPER_TARGETS
 
-DOT_NAME = "hgd0_04-02"
+DOT_NAME = "LTS"
 DOT_PATH = os.path.join("output", DOT_NAME + ".dot")
 BIORESOLVE_FILE = "BioReSolvePositive.pl"
 CONTEXT_SIZE = 10  # BH4, Phe, TAT, PLP, DHPR, PAH, GSTZ1, HPD, HGD, FAH
