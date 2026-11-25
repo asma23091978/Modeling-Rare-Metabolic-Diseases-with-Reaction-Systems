@@ -76,11 +76,6 @@ The script reads `output/LTS.dot`, identifies attractors containing the manuscri
 
 If you use this code or build on this work, please cite the associated article.
 
-Asma Bendjeddou, Linda Brodo, Moreno Falaschi, and Caterina Graziani (2027).
-“Modeling rare metabolic diseases with reaction systems.”
-*Journal of Logical and Algebraic Methods in Programming*, 152, article 101185.
-[https://doi.org/10.1016/j.jlamp.2026.101185](https://doi.org/10.1016/j.jlamp.2026.101185)
-
 ```bibtex
 @article{Bendjeddou2027ReactionSystems,
   author  = {Bendjeddou, Asma and Brodo, Linda and Falaschi, Moreno and Graziani, Caterina},
