@@ -69,7 +69,7 @@ by pointing to a path in your file system:
 */
 
 
-:-["/Users/caterinagraziani/Desktop/Lavoro/RS/rules_update_04-02.pl"].
+:-["rules.pl"].
 
 
 /* IMPORTANT: 
@@ -77,7 +77,7 @@ Some predicates automatically save some output on the file system
 (mostly LTS representations in .dot format)
 wdpath/1 sets the working directory with permissions for I/O on files
 */
-wdpath("/Users/caterinagraziani/Desktop/Lavoro/RS/output_tmp/").
+wdpath("output_tmp/").
 
 
 %==== DCG PARSING RULES
