@@ -51,6 +51,7 @@ wdpath("YOUR_PATH/output_tmp/").
 
    ```prolog
    :- ['params_fixed_context_30-01_nul.pl'].
+   % :- ['params.pl'].
    ```
 
 4. Start SWI-Prolog from the repository root. At the `?-` prompt, enter these queries one at a time:
@@ -64,13 +65,21 @@ wdpath("YOUR_PATH/output_tmp/").
 
 ## Running the analysis
 
-After generating the graph, run the analysis from the repository root:
+Once `output/LTS.dot` is ready, switch `rules.pl` to the slicing configuration:
+
+```prolog
+% :- ['params_fixed_context.pl'].
+:- ['params.pl'].
+```
+
+From the repository root, run: 
 
 ```sh
 python slicing_script.py
 ```
 
-The script reads `output/LTS.dot`, identifies attractors containing the manuscript targets, extracts the corresponding initial contexts, and calls BioReSolve for dynamic negative slicing. Generated analysis files are written under `Results/`.
+The script reads `output/LTS.dot`, identifies attractors containing the manuscript targets, extracts the corresponding initial contexts, and writes `params.pl` for each slicing case before calling BioReSolve for dynamic negative slicing. Generated analysis files are written under `Results/`. 
+
 
 ## Citation
 
