@@ -1,7 +1,7 @@
 /* To generate the .dot file */
-%:-["/Users/caterinagraziani/Desktop/Lavoro/RS/params_fixed_context_30-01_nul.pl"].
+:-["/Users/caterinagraziani/Desktop/Lavoro/RS/params_fixed_context_30-01_nul.pl"].
 /* For the slicing */
-:-["/Users/caterinagraziani/Desktop/Lavoro/RS/params_simulation.pl"].
+%:-["/Users/caterinagraziani/Desktop/Lavoro/RS/params.pl"].
 
 myreactions([
 react([co2,co2_a],[],[co2_a]),
