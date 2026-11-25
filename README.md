@@ -1,4 +1,4 @@
-# Modeling Rare Metabolic Diseases with Reaction Systems (PT-RS)
+# Modeling Rare Metabolic Diseases with Reaction Systems
 
 This repository contains the computational material associated with the manuscript **“Modeling Rare Metabolic Diseases with Reaction Systems”**. The study models phenylalanine-tyrosine (Phe-Tyr) catabolism with Reaction Systems (RSs) and Discrete Entity-Level Annotation (DEA), and analyzes disease-relevant outcomes by target-oriented attractor analysis and dynamic negative slicing.
 
@@ -86,3 +86,23 @@ python slicing_script.py
 The script reads `output/LTS.dot`, identifies attractors containing the manuscript targets, extracts the corresponding initial contexts, and calls BioReSolve for dynamic negative slicing. Generated analysis files are written under `Results/`.
 
 ## Citation
+
+If you use this code or build on this work, please cite the associated article.
+
+Asma Bendjeddou, Linda Brodo, Moreno Falaschi, and Caterina Graziani (2027).
+“Modeling rare metabolic diseases with reaction systems.”
+*Journal of Logical and Algebraic Methods in Programming*, 152, article 101185.
+[https://doi.org/10.1016/j.jlamp.2026.101185](https://doi.org/10.1016/j.jlamp.2026.101185)
+
+```bibtex
+@article{Bendjeddou2027ReactionSystems,
+  author  = {Bendjeddou, Asma and Brodo, Linda and Falaschi, Moreno and Graziani, Caterina},
+  title   = {Modeling rare metabolic diseases with reaction systems},
+  journal = {Journal of Logical and Algebraic Methods in Programming},
+  volume  = {152},
+  year    = {2027},
+  pages   = {101185},
+  issn    = {2352-2208},
+  doi     = {10.1016/j.jlamp.2026.101185}
+}
+```
