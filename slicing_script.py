@@ -1,7 +1,8 @@
-"""PT-RS target-oriented attractor analysis and dynamic negative slicing.
+"""Target-oriented attractor analysis and dynamic negative slicing.
 
-This script is aligned with the targets reported in the manuscript
-"Modeling Rare Metabolic Diseases with Reaction Systems".
+This script was adapted from 
+L. Brodo, R. Bruni, M. Falaschi, R. Gori, P. Milazzo, Slicing analyses for negative dependencies in reaction systems modeling gene regulatory networks, Nat.
+Comput. 24 (2025) 1045–1074. https://doi.org/10.1007/s11047-025-10046-5.
 
 Required runtime files:
 - output/LTS.dot
