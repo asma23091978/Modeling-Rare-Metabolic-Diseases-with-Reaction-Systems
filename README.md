@@ -17,21 +17,8 @@ DEA suffixes used in the implementation are: `_a` for accumulated metabolite lev
 ├── params_fixed_context.pl
 ├── BioReSolvePositive.pl
 ├── output/
-│   └── LTS.dot
-├── Results/
-    ├── README.md
-    ├── conditional_dependency_matrices/
-    │   ├── necessary_matrix_by_target_hga_a.pdf
-    │   ├── necessary_matrix_by_target_hawk_a.pdf
-    │   ├── necessary_matrix_by_target_sa.pdf
-    │   ├── necessary_matrix_by_target_tyr_b.pdf
-    │   └── necessary_matrix_by_target_tyr_b_bh4_b.pdf
-    └── dynamic_negative_slicing/
-       ├── table_results_bicolor-1.pdf
-       ├── table_results_bicolor-2.pdf
-       └── sa/
-           ├── pos_output_sa.txt
-           └── neg_output_sa.txt
+    └── LTS.dot
+
 ```
 
 ## Requirements
