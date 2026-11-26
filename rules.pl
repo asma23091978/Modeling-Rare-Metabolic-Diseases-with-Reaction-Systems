@@ -1,5 +1,5 @@
 /* To generate the .dot file */
-:-["/params_fixed_context_30-01_nul.pl"].
+:-["/params_fixed_context.pl"].
 /* For the slicing */
 %:-["/params.pl"].
 
