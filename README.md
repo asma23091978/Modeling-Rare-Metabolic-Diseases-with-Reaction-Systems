@@ -44,7 +44,7 @@ The labeled transition system (LTS) is generated locally from the reaction rules
 
 Some predicates automatically save some output on the file system (mostly LTS representations in .dot format) wdpath/1 sets the working directory with permissions for I/O on filesuse the following directives and settings for the reaction rules and output directory:
 
-wdpath("YOUR_PATH/output_tmp/").
+wdpath("YOUR_PATH/output/").
 
 
 3. In `rules.pl`, enable the following directive. 
