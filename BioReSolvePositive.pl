@@ -77,7 +77,7 @@ Some predicates automatically save some output on the file system
 (mostly LTS representations in .dot format)
 wdpath/1 sets the working directory with permissions for I/O on files
 */
-wdpath("output_tmp/").
+wdpath("output/").
 
 
 %==== DCG PARSING RULES
