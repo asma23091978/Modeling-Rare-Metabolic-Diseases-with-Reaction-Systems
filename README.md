@@ -50,7 +50,7 @@ wdpath("YOUR_PATH/output_tmp/").
 3. In `rules.pl`, enable the following directive. 
 
    ```prolog
-   :- ['params_fixed_context_30-01_nul.pl'].
+   :- ['params_fixed_context.pl'].
    % :- ['params.pl'].
    ```
 
